@@ -2,7 +2,7 @@
 
 Simple web application for extracting organic search results from the first page of Google and downloading them as a JSON file.
 
-**Live Demo:** [Odkaz na aplikaci]
+**Live Demo:** [[Odkaz na aplikaci](https://inizio-google.onrender.com/)]
 
 
 ## Features
@@ -26,26 +26,24 @@ Simple web application for extracting organic search results from the first page
 
 ## Project Structure
 
-├── dist/                   # Compiled JavaScript files for production
-├── public/                 # Static files for the browser
-│ ├── index.html            # Main HTML page
-│ ├── script.js             # Compiled client-side JavaScript
-│ └── style.css             # Compiled Tailwind CSS
-├── src/                    # TypeScript source code
-│ ├── server.ts             # Express server logic
-│ ├── script.ts             # Client-side TypeScript source
-│ ├── schemas.ts            # Zod schemas for API data validation
-│ ├── input.css             # Tailwind CSS source file
-│ └── server.test.ts        # Unit tests
-├── .gitignore              # Files to be ignored by Git
-├── Dockerfile              # Instructions for building the Docker image
-├── docker-compose.yml      # Configuration for Docker Compose
-├── jest.config.js          # Jest test framework configuration
-├── nodemon.json            # Configuration for Nodemon to auto-restart the server
-├── package.json            # Project dependencies and scripts
-├── tailwind.config.js      # Tailwind CSS configuration
-└── tsconfig.json           # TypeScript compiler configuration
-
+├── dist/
+├── public/
+│ ├── index.html
+│ ├── script.js
+│ └── style.css
+├── src/
+│ ├── server.ts
+│ ├── script.ts
+│ ├── schemas.ts
+│ ├── input.css
+│ └── server.test.ts
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yml
+├── jest.config.js
+├── package.json
+├── tailwind.config.js
+└── tsconfig.json
 
 ## Installation and Configuration
 

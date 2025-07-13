@@ -1,11 +1,7 @@
 services:
   app:
     build: .
-    container_name: inizio-google-app
     ports:
       - "3000:3000"
     env_file:
       - .env
-    volumes:
-      - ./src:/app/src
-      - ./public:/app/public

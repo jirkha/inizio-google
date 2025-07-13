@@ -1,0 +1,7 @@
+# This file adds settings ONLY for local development.
+# Docker Compose automatically merges it with the base docker-compose.yml.
+services:
+  app:
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public

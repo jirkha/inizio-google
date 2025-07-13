@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+    --color-inizio-blue: rgb(0, 87, 138);
+    --color-inizio-red: rgb(227, 61, 48)
+}

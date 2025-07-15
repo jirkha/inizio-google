@@ -38,9 +38,9 @@ Simple web application for extracting organic search results from the first page
 │ ├── schemas.ts            # Zod schemas for API data validation
 │ ├── input.css             # Tailwind CSS source file
 │ └── server.test.ts        # Unit tests
-├── .gitignore              # Files to be ignored by Git
 ├── Dockerfile              # Instructions for building the Docker image
 ├── docker-compose.yml      # Configuration for Docker Compose
+├── docker-compose.override # Local configuration for Docker Compose
 ├── jest.config.js          # Jest test framework configuration
 ├── nodemon.json            # Configuration for Nodemon to auto-restart the server
 ├── package.json            # Project dependencies and scripts

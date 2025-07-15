@@ -30,6 +30,9 @@ const OrganicSchema = z
 // Describes the full API response, which contains a list of search results
 export const SerpApiSchema = z
   .object({
+    search_parameters: z.object({
+      q: z.string(),
+    }),
     organic_results: z.array(OrganicSchema),
   })
   .loose();

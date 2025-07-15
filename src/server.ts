@@ -26,10 +26,10 @@ app.get("/api/inizio-google", async (req: Request, res: Response) => {
     });
   }
 
+  // Google Organic Results API | https://serpapi.com/organic-results
   // 'encodeURIComponent' makes the string safe to be used inside a URL
-  const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(
-    query
-  )}&hl=cs&gl=cz&api_key=${apiKey}`;
+  const encodedUri = encodeURIComponent(query)
+  const apiUrl = `https://serpapi.com/search.json?q=${encodedUri}&hl=cs&gl=cz&api_key=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl);
@@ -41,8 +41,13 @@ app.get("/api/inizio-google", async (req: Request, res: Response) => {
     }
 
     const data = await response.json();
+    // 'parse' is a Zod method
     const validatedData = SerpApiSchema.parse(data);
-    res.json(validatedData);
+    const actualSearchedQuery = validatedData.search_parameters.q;
+    res.json({
+      searchQuery: actualSearchedQuery,
+      data: validatedData,
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       // 'error.issues' is a Zod property
@@ -52,7 +57,6 @@ app.get("/api/inizio-google", async (req: Request, res: Response) => {
           "Data z externí služby mají neočekávaný formát. Zkuste to prosím později.",
       });
     }
-
     console.error("An unexpected error occurred:", error);
     return res.status(500).json({
       error: "Na serveru došlo k neočekávané chybě. Zkuste to prosím později.",
@@ -60,7 +64,6 @@ app.get("/api/inizio-google", async (req: Request, res: Response) => {
   }
 });
 
-// The '10' is a safety measure that tells it to use the decimal system (0-9)
 const PORT: number = parseInt(process.env.PORT || "3000", 10);
 
 // set `process.env.NODE_ENV` to "test" when Jest is running

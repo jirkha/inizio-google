@@ -20,24 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Helper Functions ---
 
-  // This function handles downloading the JSON file
   const downloadJson = (data: unknown, filename: string): void => {
     // --- Step 1: Convert the Data Object to a String ---
-    // JSON.stringify(value, replacer, space)
     const jsonString = JSON.stringify(data, null, 2);
 
     // --- Step 2: Makes the string safe to be used inside a URL
     const encodedJsonString = encodeURIComponent(jsonString);
 
     // --- Step 3: Define the Data Header ---
-    // Data URI is a special link that contains the file data
     const dataUriPrefix = "data:application/json;charset=utf-8,";
 
-    // --- Step 4: Create the Full Data URI ---
+    // --- Step 4: Create the Full Data URI (a special link that contains the file data) ---
     const fullDataUri = dataUriPrefix + encodedJsonString;
 
     // --- Step 5: Trigger the Download ---
-    // Create a hidden link element.
     const downloadLink = document.createElement("a");
     downloadLink.href = fullDataUri;
     downloadLink.download = filename;
@@ -46,30 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadLink.click();
   };
 
-   const setLoadingState = (isLoading: boolean): void => {
-     // Find text and spinner elements inside the button.
-     const buttonText = button.querySelector(".button-text");
-     const buttonSpinner = button.querySelector(".button-spinner");
-     button.disabled = isLoading;
+  const setLoadingState = (isLoading: boolean): void => {
+    // Find text and spinner elements inside the button.
+    const buttonText = button.querySelector(".button-text");
+    const buttonSpinner = button.querySelector(".button-spinner");
+    button.disabled = isLoading;
 
-     if (isLoading) {
-       button.disabled = true;
-       if (buttonText) {
-         buttonText.classList.add("hidden");
-       }
-       if (buttonSpinner) {
-         buttonSpinner.classList.remove("hidden");
-       }
-     } else {
-       button.disabled = false;
-       if (buttonText) {
-         buttonText.classList.remove("hidden");
-       }
-       if (buttonSpinner) {
-         buttonSpinner.classList.add("hidden");
-       }
-     }
-   };
+    if (isLoading) {
+      button.disabled = true;
+      if (buttonText) {
+        buttonText.classList.add("hidden");
+      }
+      if (buttonSpinner) {
+        buttonSpinner.classList.remove("hidden");
+      }
+    } else {
+      button.disabled = false;
+      if (buttonText) {
+        buttonText.classList.remove("hidden");
+      }
+      if (buttonSpinner) {
+        buttonSpinner.classList.add("hidden");
+      }
+    }
+  };
 
   const validateInput = (): boolean => {
     // It removes any extra spaces from the ends
@@ -78,12 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const isValid = trimmedValue !== "";
 
     if (isValid) {
-      input.classList.add("border-gray-300");
+      input.classList.add("border-inizio-blue");
       input.classList.remove("border-inizio-red");
       errorMsg.classList.add("hidden");
     } else {
       input.classList.add("border-inizio-red");
-      input.classList.remove("border-gray-300");
+      input.classList.remove("border-inizio-blue");
       errorMsg.classList.remove("hidden");
     }
     return isValid;
@@ -99,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setLoadingState(true);
-    // Hides old messages when starting a new search
     errorMsg.classList.add("hidden");
     successMsg.classList.add("hidden");
 
@@ -112,11 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
 
-      const data: SerpApiResponse = await response.json();
-      downloadJson(data.organic_results, "results.json");
+      const dataServer = await response.json();
+      const queryForFilename: string = dataServer.searchQuery;
+      const serpData: SerpApiResponse = dataServer.data;
+      const filename = `${queryForFilename.replace(/ /g, "_")}_results.json`;
+      downloadJson(serpData.organic_results, filename);
       successMsg.classList.remove("hidden");
     } catch (err) {
-
       if (err instanceof Error) {
         // It allows to displays message from the server to users
         errorMsg.textContent = err.message;

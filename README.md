@@ -2,7 +2,7 @@
 
 Simple web application for extracting organic search results from the first page of Google and downloading them as a JSON file.
 
-**Live Demo:** [[inizio-google.vercel.app](https://inizio-google.vercel.app/)]
+**Live Demo:** [[inizio-google-production.up.railway.app](https://inizio-google-production.up.railway.app/)]
 
 
 ## Features

@@ -21,9 +21,12 @@ describe("GET /api/inizio-google", () => {
     expect(res.body).toHaveProperty("error");
   });
 
-  it("should return 200 with data on a successful API call", async () => {
+  it("should return 200 with the correct data structure on a successful API call", async () => {
     // A fake response that we want our fake API call to return
-    const mockApiResponse = {
+    const expectedDataAfterValidation = {
+      search_parameters: {
+        q: "validquery",
+      },
       organic_results: [
         {
           position: 1,
@@ -39,14 +42,14 @@ describe("GET /api/inizio-google", () => {
     // It returns a successful response with the fake data
     jest.mocked(fetch).mockResolvedValueOnce({
       ok: true,
-      json: async () => mockApiResponse,
+      json: async () => expectedDataAfterValidation,
     } as Response);
 
     const res = await request(app).get("/api/inizio-google?query=validquery");
-    expect(res.statusCode).toEqual(200);
 
-    // It checks if the body of the response from our server is the same as the fake data
-    expect(res.body).toEqual(mockApiResponse);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.searchQuery).toEqual("validquery");
+    expect(res.body.data).toEqual(expectedDataAfterValidation);
   });
 
   // It tests if the server returns 500 when the API key is not configured
